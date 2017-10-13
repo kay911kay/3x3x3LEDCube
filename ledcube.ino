@@ -1,12 +1,12 @@
 /*
 Author: Daniel Wang
-Objective: Attempt to multiplex and create colorful LED functions
+Objective: Attempt at multiplexing and making a fun LED cube
 Chip: ATMEGA2560;
 LEDCUBE: 3x3x3
 */
-int ledLayers[] = {24,26,28};
+int ledLayers[] = {22,24,26};
 int ledPins[] = {13,12,11,10,9,8,7,6,5}; //left to right array
-int ledPinsRotate[] = {13,12,11,10,7,6,5,8,9}; //spiral array specifically made for rotating wall #4, pins will change
+int ledPinsRotate[] = {11,12,13,10,7,6,5,8,9}; //spiral array specifically made for rotating wall #4, pins will change
 int routine = 6; // the number of the routine to be played from 1 to 7
 int randLayer; //the random layer pin number generated from 1-3
 int randPin; //the random pin number generated from 1-9
@@ -28,7 +28,27 @@ void setup(){
 void loop(){
 
   
- RoutineSix();
+  if (routine == 1){
+    RoutineOne();
+  }
+    if (routine == 2){
+    RoutineTwo();
+  }
+    if (routine == 3){
+    RoutineThree();
+  }
+    if (routine == 4){
+    RoutineFour();
+  }
+    if (routine == 5){
+    RoutineFive();
+  }
+    if (routine == 6){
+    RoutineSix();
+  }
+    if (routine == 7){
+    RoutineSeven();
+  }
   
 }
 
@@ -45,8 +65,8 @@ for (int i = 0; i<3; i++){ //sets every layer to off at the start of the loop an
   digitalWrite(ledLayers[i],LOW);
   delay(1000);
   } 
- for (int t = 1; t> 0; t--){ 
-  for (int k = 3; k>0; k--){
+ for (int t = 1; t>= 0; t--){ 
+  for (int k = 3; k>=0; k--){
   digitalWrite(ledLayers[k], HIGH);
   } 
   delay(1000); 
@@ -96,10 +116,10 @@ for (int i = 0; i<3; i++){ //does what the above does but in backwards mode so m
 
 void RoutineThree(){//starburst, start with the middle led lit and burst the led's outward to the corners
   digitalWrite(ledLayers[0], HIGH); 
-  digitalWrite(ledLayers[2], HIGH);
+  digitalWrite(ledLayers[3], HIGH);
   digitalWrite(ledLayers[1], LOW);
   for(int i = 0; i<9; i++){
-    digitalWrite(ledPins[i], LOW); 
+    digitalWrite(ledPins[i], LOW);
   }  
  digitalWrite(ledPins[4], HIGH); //the 6 lines above this allow it so that we start off with only the middle led on
  delay(1000);
@@ -180,9 +200,9 @@ void RoutineSix(){ //Count up/down, light up each led one at a time from the bot
     for (int k = 0; k<9; k++){
       digitalWrite(ledPins[k], LOW);
     }
-    digitalWrite(ledPinsRotate[i], HIGH);
+    digitalWrite(ledPins[i], HIGH);
     delay(1000);
-    digitalWrite(ledPinsRotate[i], LOW);
+    digitalWrite(ledPins[i], LOW);
   }
   digitalWrite(ledLayers[x], HIGH);
 }
@@ -198,13 +218,13 @@ void RoutineSix(){ //Count up/down, light up each led one at a time from the bot
     for (int k = 0; k<9; k++){
       digitalWrite(ledPins[k], LOW);
     }
-    digitalWrite(ledPinsRotate[i], HIGH);
+    digitalWrite(ledPins[i], HIGH);
     delay(1000);
-    digitalWrite(ledPinsRotate[i], LOW);
-    
+    digitalWrite(ledPins[i], LOW);
   }
   digitalWrite(ledLayers[x], HIGH);
 }
 }
+
 
 
